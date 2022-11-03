@@ -1,0 +1,12 @@
+/**
+ * 
+ */
+package com.springRestApi.EmployeeManagementRestApi.utils;
+
+/**
+ * @author Somya
+ *
+ */
+public class AppConstants {
+
+}

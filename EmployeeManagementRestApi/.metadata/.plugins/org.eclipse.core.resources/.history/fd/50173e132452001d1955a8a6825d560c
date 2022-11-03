@@ -1,0 +1,5 @@
+package com.springRestApi.EmployeeManagementRestApi.model;
+
+public class Role {
+
+}

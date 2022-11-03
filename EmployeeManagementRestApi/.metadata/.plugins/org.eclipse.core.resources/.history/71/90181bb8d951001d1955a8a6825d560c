@@ -1,0 +1,15 @@
+package com.springRestApi.EmployeeManagementRestApi.service;
+
+import java.util.List;
+import com.springRestApi.EmployeeManagementRestApi.model.Employee;
+
+public interface EmployeeService {
+
+	public List<Employee> fetchAllEmployees();
+	public Employee fetchEmployeeById(long employeeId);
+	public void deleteEmployeeById(long employeeId);
+	public Employee addEmployee(Employee employee);
+	public Employee updateEmployee(long employeeId,Employee employee);
+	public List<Employee> fetchEmployeesByFirstName(String firstName);
+	public List<Employee> fetchEmployeesSortedByFirstName(String sortDir);
+}

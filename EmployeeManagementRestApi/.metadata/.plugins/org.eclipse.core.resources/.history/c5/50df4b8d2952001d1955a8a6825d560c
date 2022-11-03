@@ -1,0 +1,36 @@
+package com.springRestApi.EmployeeManagementRestApi.utils;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import com.springRestApi.EmployeeManagementRestApi.model.Role;
+import com.springRestApi.EmployeeManagementRestApi.model.User;
+import com.springRestApi.EmployeeManagementRestApi.repository.UserRepository;
+
+
+public class BootstrapAppData {
+	@Autowired
+	private UserRepository userRepository;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
+	@EventListener(ApplicationReadyEvent.class)
+	public void insertUsers(ApplicationReadyEvent event) {
+		User firstUser = new User();
+		firstUser.setUsername("Anil");
+		firstUser.setPassword(this.passwordEncoder.encode("welcome"));
+		
+		User secondUser = new User();
+		secondUser.setUsername("Somya");
+		secondUser.setPassword(this.passwordEncoder.encode("welcome"));
+		
+		Role userRole = new Role();
+		userRole.setName("USER");
+		
+		Role adminRole = new Role();
+		adminRole.setName("ADMIN");
+	}
+}

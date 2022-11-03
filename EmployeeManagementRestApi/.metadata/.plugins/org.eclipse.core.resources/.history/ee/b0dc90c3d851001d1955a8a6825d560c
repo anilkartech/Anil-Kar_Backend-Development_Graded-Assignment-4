@@ -1,0 +1,60 @@
+package com.springRestApi.EmployeeManagementRestApi.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import com.springRestApi.EmployeeManagementRestApi.model.Employee;
+import com.springRestApi.EmployeeManagementRestApi.repository.EmployeeRepository;
+import org.springframework.data.domain.Sort;
+
+@Service
+public class EmployeeServiceImpl implements EmployeeService {
+
+	@Autowired
+	public EmployeeRepository employeeRepository;
+
+	@Override
+	public List<Employee> fetchAllEmployees() {
+		return this.employeeRepository.findAll();
+	}
+
+	@Override
+	public Employee fetchEmployeeById(long employeeId) {
+		return this.employeeRepository.findById(employeeId)
+				.orElseThrow(() -> new IllegalArgumentException("invalid employee id passed.."));
+	}
+
+	@Override
+	public void deleteEmployeeById(long employeeId) {
+		this.employeeRepository.deleteById(employeeId);
+	}
+
+	@Override
+	public Employee addEmployee(Employee employee) {
+		Employee savedEmployee = this.employeeRepository.save(employee);
+		return savedEmployee;
+	}
+
+	@Override
+	public Employee updateEmployee(long employeeId, Employee employee) {
+		Employee employeeFromRepository = this.fetchEmployeeById(employeeId);
+		employeeFromRepository.setFirstName(employee.getFirstName());
+		employeeFromRepository.setLastName(employee.getLastName());
+		employeeFromRepository.setEmail(employee.getEmail());
+		return this.employeeRepository.save(employeeFromRepository);
+	}
+
+	@Override
+	public List<Employee> fetchEmployeesByFirstName(String firstName) {
+		return this.employeeRepository.findByfirstName(firstName);
+	}
+
+	@Override
+	public List<Employee> fetchEmployeesSorted(String sortBy, String sortDir) {
+		Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()
+                : Sort.by(sortBy).descending();
+		return this.employeeRepository.findAll(sort);
+	}
+
+}
